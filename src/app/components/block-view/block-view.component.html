@@ -1,0 +1,23 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="background-color: transparent;">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <button mat-icon-button disabled></button>
+        <ng-container [ngSwitch]="node.key">
+            <ng-container *ngSwitchCase="'Ts'"><h3>{{node.key}}:</h3> {{node.value * 1000 | date : 'dd/MM/yyyy HH:mm:ss'}}</ng-container>
+            <ng-container *ngSwitchCase="'PrevHash'"><h3>{{node.key}}:</h3> <span style="text-transform: uppercase;">{{node.value}}</span></ng-container>
+            <ng-container *ngSwitchCase="'Hash'"><h3>{{node.key}}:</h3> <span style="text-transform: uppercase;">{{node.value}}</span></ng-container>
+            <ng-container *ngSwitchDefault><h3>{{node.key}}:</h3> {{node.value}}</ng-container>
+        </ng-container>
+        
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.key">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        <h3>{{node.key}}</h3>
+    </mat-tree-node>
+</mat-tree>

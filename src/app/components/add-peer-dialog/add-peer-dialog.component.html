@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Add Peer</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Peer ip and port number (e.g. localhost:8081)</mat-label>
+    <input matInput [(ngModel)]="addr">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="primary" mat-button (click)="addPeer()">Add</button>
+  <button mat-stroked-button color="warn" mat-button (click)="close()" cdkFocusInitial>Close</button>
+</div>

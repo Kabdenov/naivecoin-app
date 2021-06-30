@@ -1,0 +1,75 @@
+<div class="flex-row">
+  <mat-card class="citrus">
+
+    <mat-card-title>
+      <mat-icon color="primary">account_balance_wallet</mat-icon> Balance: {{balance}}
+    </mat-card-title>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>My Address</mat-label>
+      <input type="text" [disabled]="true" matInput [(ngModel)]="myaddress">
+    </mat-form-field>
+
+    <button mat-stroked-button color="primary" (click)="copyAddress()">Copy My Address
+      <mat-icon>content_copy</mat-icon>
+    </button>
+
+  </mat-card>
+
+  <mat-card class="justify-center summer">
+    <mat-spinner *ngIf="miningInProgress"></mat-spinner>
+    <button [disabled]="miningInProgress" mat-stroked-button color="primary" (click)="mineNextBlock()">Mine next block
+      <mat-icon>handyman</mat-icon>
+    </button>
+  </mat-card>
+
+
+  <mat-card class="">
+    <mat-card-title>
+      <mat-icon color="primary">people</mat-icon> Send Coins
+    </mat-card-title>
+
+    <form autocomplete="off">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Recipent Address</mat-label>
+        <input matInput [(ngModel)]="address" name="address">
+        <mat-icon matSuffix color="primary">account_balance_wallet</mat-icon>
+        <mat-hint *ngIf="address && address.length != 88 && address.length > 0">Invalid address</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input min="0" max="{{balance}}" type="number" matInput [(ngModel)]="amount" name="amount">
+        <mat-icon matSuffix color="primary">payments</mat-icon>
+        <mat-hint *ngIf="amount && balance && amount > balance">Not enough coins</mat-hint>
+      </mat-form-field>
+
+      <mat-slide-toggle (change)="onChange($event)">Send without mining</mat-slide-toggle>
+
+      <button mat-stroked-button color="primary" (click)="sendCoins()">Send
+        <mat-icon>send</mat-icon>
+      </button>
+
+      <button mat-stroked-button color="primary" (click)="addPeer()" style="float: right;">Add Peer
+        <mat-icon>person_add</mat-icon>
+      </button>
+
+    </form>
+  </mat-card>
+
+  <div class="break"></div>
+
+  <mat-card>
+    <mat-card-title>
+      <mat-icon color="primary">handyman</mat-icon> BLOCK #{{lastBlock ? lastBlock.Fields.Index : ''}}
+      <button mat-stroked-button color="primary" (click)="getLastBlock()" style="float: right;">Get Last Block
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-card-title>
+    <app-block-view *ngIf="lastBlock" [block]="lastBlock"></app-block-view>
+  </mat-card>
+
+  <div class="break"></div>
+</div>
